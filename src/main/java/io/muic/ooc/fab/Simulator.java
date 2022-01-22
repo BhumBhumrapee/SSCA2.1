@@ -24,8 +24,8 @@ public class Simulator {
     private static final double RABBIT_CREATION_PROBABILITY = 0.08;
 
     // Lists of animals in the field.
-    private List<Rabbit> rabbits;
-    private List<Fox> foxes;
+    private List<Animal> rabbits;
+    private List<Animal> foxes;
     // The current state of the field.
     private Field field;
     // The current step of the simulation.
@@ -130,8 +130,8 @@ public class Simulator {
         // Provide space for newborn rabbits.
         List<Rabbit> newRabbits = new ArrayList<>();
         // Let all rabbits act.
-        for (Iterator<Rabbit> it = rabbits.iterator(); it.hasNext();) {
-            Rabbit rabbit = it.next();
+        for (Iterator<Animal> it = rabbits.iterator(); it.hasNext();) {
+            Rabbit rabbit = (Rabbit) it.next();
             rabbit.run(newRabbits);
             if (!rabbit.isAlive()) {
                 it.remove();
@@ -141,8 +141,8 @@ public class Simulator {
         // Provide space for newborn foxes.
         List<Fox> newFoxes = new ArrayList<>();
         // Let all foxes act.
-        for (Iterator<Fox> it = foxes.iterator(); it.hasNext();) {
-            Fox fox = it.next();
+        for (Iterator<Animal> it = foxes.iterator(); it.hasNext();) {
+            Fox fox = (Fox) it.next();
             fox.hunt(newFoxes);
             if (!fox.isAlive()) {
                 it.remove();
