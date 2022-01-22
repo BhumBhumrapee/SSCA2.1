@@ -1,5 +1,27 @@
 package io.muic.ooc.fab;
+import java.awt.*;
 
 public enum AnimalType {
-    RABBIT, FOX
+    RABBIT(Rabbit.class, Color.ORANGE, 0.02),
+    FOX(Fox.class, Color.BLUE, 0.08);
+
+    private Class<? extends Animal> animalClass;
+
+    private Color color;
+
+    private Double probability;
+
+    AnimalType(Class<? extends Animal> animalClass, Color color, double probability) {
+        this.animalClass = animalClass;
+        this.color = color;
+        this.probability = probability;
+    }
+
+    public Class<? extends Animal> getAnimalClass() {
+        return animalClass;
+    }
+
+    public Color getColor() {
+        return color;
+    }
 }

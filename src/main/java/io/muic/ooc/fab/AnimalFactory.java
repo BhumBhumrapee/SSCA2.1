@@ -12,7 +12,14 @@ public class AnimalFactory {
     }
 
     public static Animal createAnimal(AnimalType animalType, boolean randomAge, Field field, Location location) {
-        // ANIMAL_MAPPING.get(animalType).getDeclaredConstructor(boolean.class, Field.class, Location.class).newInstance(randomAge, field, location);
+        try {
+            return ANIMAL_MAPPING.get(animalType).getDeclaredConstructor(boolean.class, Field.class, Location.class).newInstance(randomAge, field, location);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        /*
+
         if (animalType.equals(AnimalType.RABBIT)) {
             return new Rabbit(randomAge, field, location);
         } else if (animalType.equals(AnimalType.FOX)) {
@@ -20,6 +27,7 @@ public class AnimalFactory {
         } else {
             throw new RuntimeException("Unknown animal Type");
         }
+         */
     }
 
 }
