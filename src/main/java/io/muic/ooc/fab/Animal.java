@@ -22,10 +22,6 @@ public abstract class Animal {
 
     protected abstract int getMaxLitterSize();
 
-    public Animal() {
-
-    }
-
     public Animal(boolean randomAge, Field field, Location location) {
         this.alive = true;
         this.field = field;
