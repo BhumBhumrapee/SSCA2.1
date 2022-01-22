@@ -14,9 +14,6 @@ public class Rabbit extends Animal {
     private static final double BREEDING_PROBABILITY = 0.12;
     // The maximum number of births.
     private static final int MAX_LITTER_SIZE = 4;
-    // A shared random number generator to control breeding.
-    private static final Random RANDOM = new Random();
-
 
 
     /**
@@ -28,13 +25,7 @@ public class Rabbit extends Animal {
      * @param location The location within the field.
      */
     public Rabbit(boolean randomAge, Field field, Location location) {
-        setAge(0);
-        setAlive(true);
-        setField(field);
-        setLocation(location);
-        if (randomAge) {
-            setAge(RANDOM.nextInt(MAX_AGE));
-        }
+        super(randomAge, field, location);
     }
 
     /**
@@ -59,22 +50,6 @@ public class Rabbit extends Animal {
     }
 
     /**
-     * Check whether the rabbit is alive or not.
-     *
-     * @return true if the rabbit is still alive.
-     */
-
-
-
-    /**
-     * Return the rabbit's location.
-     *
-     * @return The rabbit's location.
-     */
-
-
-
-    /**
      * Check whether or not this rabbit is to give birth at this step. New
      * births will be made into free adjacent locations.
      *
@@ -92,28 +67,6 @@ public class Rabbit extends Animal {
         }
     }
 
-    /**
-     * Generate a number representing the number of births, if it can breed.
-     *
-     * @return The number of births (may be zero).
-     */
-    private int breed() {
-        int births = 0;
-        if (canBreed() && RANDOM.nextDouble() <= BREEDING_PROBABILITY) {
-            births = RANDOM.nextInt(MAX_LITTER_SIZE) + 1;
-        }
-        return births;
-    }
-
-    /**
-     * A rabbit can breed if it has reached the breeding age.
-     *
-     * @return true if the rabbit can breed, false otherwise.
-     */
-    private boolean canBreed() {
-        return getAge() >= BREEDING_AGE;
-    }
-
     @Override
     protected int getMaxAge() {
         return MAX_AGE;
@@ -122,5 +75,15 @@ public class Rabbit extends Animal {
     @Override
     protected int getBreedingAge() {
         return BREEDING_AGE;
+    }
+
+    @Override
+    protected double getBreedingProbability() {
+        return BREEDING_PROBABILITY;
+    }
+
+    @Override
+    protected int getMaxLitterSize() {
+        return MAX_LITTER_SIZE;
     }
 }
