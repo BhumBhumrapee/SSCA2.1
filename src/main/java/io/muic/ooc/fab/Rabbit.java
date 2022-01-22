@@ -3,7 +3,7 @@ package io.muic.ooc.fab;
 import java.util.List;
 import java.util.Random;
 
-public class Rabbit {
+public class Rabbit extends Animal {
     // Characteristics shared by all rabbits (class variables).
 
     // The age at which a rabbit can start to breed.
@@ -17,15 +17,7 @@ public class Rabbit {
     // A shared random number generator to control breeding.
     private static final Random RANDOM = new Random();
 
-    // Individual characteristics (instance fields).
-    // The rabbit's age.
-    private int age;
-    // Whether the rabbit is alive or not.
-    private boolean alive;
-    // The rabbit's position.
-    private Location location;
-    // The field occupied.
-    private Field field;
+
 
     /**
      * Create a new rabbit. A rabbit may be created with age zero (a new born)
@@ -36,12 +28,12 @@ public class Rabbit {
      * @param location The location within the field.
      */
     public Rabbit(boolean randomAge, Field field, Location location) {
-        age = 0;
-        alive = true;
-        this.field = field;
+        setAge(0);
+        setAlive(true);
+        setField(field);
         setLocation(location);
         if (randomAge) {
-            age = RANDOM.nextInt(MAX_AGE);
+            setAge(RANDOM.nextInt(MAX_AGE));
         }
     }
 
@@ -53,10 +45,10 @@ public class Rabbit {
      */
     public void run(List<Rabbit> newRabbits) {
         incrementAge();
-        if (alive) {
+        if (isAlive()) {
             giveBirth(newRabbits);
             // Try to move into a free location.
-            Location newLocation = field.freeAdjacentLocation(location);
+            Location newLocation = getField().freeAdjacentLocation(getLocation());
             if (newLocation != null) {
                 setLocation(newLocation);
             } else {
@@ -71,54 +63,16 @@ public class Rabbit {
      *
      * @return true if the rabbit is still alive.
      */
-    public boolean isAlive() {
-        return alive;
-    }
 
-    /**
-     * Indicate that the rabbit is no longer alive. It is removed from the
-     * field.
-     */
-    public void setDead() {
-        alive = false;
-        if (location != null) {
-            field.clear(location);
-            location = null;
-            field = null;
-        }
-    }
+
 
     /**
      * Return the rabbit's location.
      *
      * @return The rabbit's location.
      */
-    public Location getLocation() {
-        return location;
-    }
 
-    /**
-     * Place the rabbit at the new location in the given field.
-     *
-     * @param newLocation The rabbit's new location.
-     */
-    private void setLocation(Location newLocation) {
-        if (location != null) {
-            field.clear(location);
-        }
-        location = newLocation;
-        field.place(this, newLocation);
-    }
 
-    /**
-     * Increase the age. This could result in the rabbit's death.
-     */
-    private void incrementAge() {
-        age++;
-        if (age > MAX_AGE) {
-            setDead();
-        }
-    }
 
     /**
      * Check whether or not this rabbit is to give birth at this step. New
@@ -129,11 +83,11 @@ public class Rabbit {
     private void giveBirth(List<Rabbit> newRabbits) {
         // New rabbits are born into adjacent locations.
         // Get a list of adjacent free locations.
-        List<Location> free = field.getFreeAdjacentLocations(location);
+        List<Location> free = getField().getFreeAdjacentLocations(getLocation());
         int births = breed();
         for (int b = 0; b < births && free.size() > 0; b++) {
             Location loc = free.remove(0);
-            Rabbit young = new Rabbit(false, field, loc);
+            Rabbit young = new Rabbit(false, getField(), loc);
             newRabbits.add(young);
         }
     }
@@ -157,6 +111,16 @@ public class Rabbit {
      * @return true if the rabbit can breed, false otherwise.
      */
     private boolean canBreed() {
-        return age >= BREEDING_AGE;
+        return getAge() >= BREEDING_AGE;
+    }
+
+    @Override
+    protected int getMaxAge() {
+        return MAX_AGE;
+    }
+
+    @Override
+    protected int getBreedingAge() {
+        return BREEDING_AGE;
     }
 }
