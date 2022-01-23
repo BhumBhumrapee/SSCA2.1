@@ -9,7 +9,7 @@ public enum AnimalType {
 
     private Color color;
 
-    private Double probability;
+    private double probability;
 
     AnimalType(Class<? extends Animal> animalClass, Color color, double probability) {
         this.animalClass = animalClass;
@@ -24,4 +24,9 @@ public enum AnimalType {
     public Color getColor() {
         return color;
     }
+
+    public double getProbability() {
+        return probability;
+    }
+
 }
