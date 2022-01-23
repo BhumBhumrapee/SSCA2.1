@@ -1,5 +1,6 @@
 package io.muic.ooc.fab;
 
+import java.util.List;
 import java.util.Random;
 
 public abstract class Animal {
@@ -21,6 +22,8 @@ public abstract class Animal {
     protected abstract double getBreedingProbability();
 
     protected abstract int getMaxLitterSize();
+
+    public abstract void act(List<Animal> newAnimal);
 
     public Animal(boolean randomAge, Field field, Location location) {
         this.alive = true;
@@ -131,6 +134,5 @@ public abstract class Animal {
     public static Random getRANDOM() {
         return RANDOM;
     }
-
 
 }

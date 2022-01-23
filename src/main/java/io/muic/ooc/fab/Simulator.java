@@ -133,9 +133,9 @@ public class Simulator {
         for (Iterator<Animal> it = animals.iterator(); it.hasNext();) {
             Animal animal = it.next();
             if (animal.getClass().equals(Rabbit.class)) {
-                ((Rabbit) animal).run(newAnimals);
+                ((Rabbit) animal).act(newAnimals);
             } else if (animal.getClass().equals(Fox.class)) {
-                ((Fox) animal).hunt(newAnimals);
+                ((Fox) animal).act(newAnimals);
             }
             if (!animal.isAlive()) {
                 it.remove();
